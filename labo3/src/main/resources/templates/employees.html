@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <title>navbar</title>
+</head>
+
+<style>
+    ul{
+        display: flex;
+        list-style-type: none;
+    }
+    li{
+        float: left;
+        margin-right: 10px;
+    }
+</style>
+
+<body>
+<nav>
+    <ul>
+        <li>
+            <button>Empleados</button>
+        </li>
+        <li>
+            <button>Historial</button>
+        </li>
+        <li>
+            <button>Reportes</button>
+        </li>
+    </ul>
+</nav>
+<table class="table table-sm">
+    <tr>
+        <th># de usuario</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Puesto</th>
+        <th>Departamento</th>
+        <th>Ciudad</th>
+        <th>Código Postal</th>
+        <th>Salario</th>
+        <th>Editar</th>
+    </tr>
+
+</table>
+
+</body>
+</html>
