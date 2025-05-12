@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
     <style>
         nav {
-            background-color: #565e64;
+            background-color: #333;
             padding: 2em;
         }
-        a {
+        button {
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
@@ -24,10 +24,10 @@
     </style>
 </head>
 <body>
-<nav>
-    <a href="#">Empleados</a>
-    <a href="#">Historial</a>
-    <a href="#">Reportes</a>
+<nav th:fragment="navbar">
+    <button onclick="window.location.href='/employeeList'">Empleados</button>
+    <button onclick="alert('Redirigiendo a Historial')">Historial</button>
+    <button onclick="alert('Redirigiendo a Reportes')">Reportes</button>
 </nav>
 </body>
 </html>
