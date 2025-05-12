@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Empleados</title>
+    <style>
+        .search-container {
+            margin: 20px 0;
+        }
+        .search-container input, .search-container select {
+            padding: 8px;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .edit-btn {
+            background-color: #008CBA;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .edit-btn:hover {
+            background-color: #007bb5;
+        }
+    </style>
+</head>
+<body>
+<!-- Fragmento del navbar -->
+<div th:replace="~{navbar.html :: navbar}"></div>
+
+<!-- Sección de búsqueda -->
+<div class="search-container">
+    <form th:action="@{/employeeList/search}" method="post">
+        <label for="search-name">Nombre:</label>
+        <input type="text" id="search-name" name="name" placeholder="Buscar por nombre">
+
+        <label for="search-dept">Departamento:</label>
+        <select id="search-dept" name="department">
+            <option value="">Todos</option>
+            <option th:each="dept : ${departments}" th:value="${dept.name}" th:text="${dept.name}"></option>
+        </select>
+
+        <button type="submit">Buscar</button>
+        <button type="button" onclick="window.location.href='/employeeList'">Limpiar</button>
+    </form>
+</div>
+
+<!-- Tabla de empleados -->
+<table id="employee-table">
+    <thead>
+    <tr>
+        <th># de usuario</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Puesto</th>
+        <th>Departamento</th>
+        <th>Ciudad</th>
+        <th>Código postal</th>
+        <th>Salario</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee : ${employees}">
+        <td th:text="${employee.id}"></td>
+        <td th:text="${employee.firstName}"></td>
+        <td th:text="${employee.lastName}"></td>
+        <td th:text="${employee.job.jobTitle}"></td>
+        <td th:text="${employee.department.name}"></td>
+        <td th:text="${employee.department.location.city}"></td>
+        <td th:text="${employee.department.location.postalCode}"></td>
+        <td th:text="${employee.salary}"></td>
+        <td><button class="edit-btn" th:onclick="'editEmployee(' + ${employee.id} + ')'">Editar</button></td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function editEmployee(id) {
+        alert(`Editar empleado con ID: ${id}`);
+        // En un entorno real, redirigirías a una página de edición
+    }
+</script>
+</body>
+</html>
