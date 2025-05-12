@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Empleado</title>
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        .cancel-btn {
+            background-color: #f44336;
+        }
+        .cancel-btn:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+<body>
+<!-- Fragmento del navbar -->
+<div th:replace="~{navbar.html :: navbar}"></div>
+
+<div class="form-container">
+    <h2>Editar Empleado</h2>
+    <form th:action="@{/employee/update}" th:object="${employee}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="firstName">Nombre:</label>
+            <input type="text" id="firstName" th:field="*{firstName}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Apellido:</label>
+            <input type="text" id="lastName" th:field="*{lastName}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="jobId">Puesto:</label>
+            <select id="jobId" th:field="*{job.id}" required>
+                <option value="">Seleccione un puesto</option>
+                <option th:each="job : ${jobs}" th:value="${job.id}" th:text="${job.jobTitle}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="departmentId">Departamento:</label>
+            <select id="departmentId" th:field="*{department.id}" required>
+                <option value="">Seleccione un departamento</option>
+                <option th:each="dept : ${departments}" th:value="${dept.id}" th:text="${dept.name}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="city">Ciudad:</label>
+            <input type="text" id="city" th:value="${employee.department.location.city}" readonly />
+        </div>
+
+        <div class="form-group">
+            <label for="postalCode">Código postal:</label>
+            <input type="text" id="postalCode" th:value="${employee.department.location.postalCode}" readonly />
+        </div>
+
+        <div class="form-group">
+            <label for="salary">Salario:</label>
+            <input type="number" id="salary" th:field="*{salary}" step="0.01" required />
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Guardar</button>
+            <a href="/employeeList">
+                <button type="button" class="cancel-btn">Cancelar</button>
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
