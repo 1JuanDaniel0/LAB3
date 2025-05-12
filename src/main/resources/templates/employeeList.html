@@ -83,16 +83,13 @@
         <td th:text="${employee.department.location.city}"></td>
         <td th:text="${employee.department.location.postalCode}"></td>
         <td th:text="${employee.salary}"></td>
-        <td><button class="edit-btn" th:onclick="'editEmployee(' + ${employee.id} + ')'">Editar</button></td>
+        <td>
+            <a th:href="@{/employee/edit/{id}(id=${employee.id})}">
+                <button class="edit-btn">Editar</button>
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>
-
-<script>
-    function editEmployee(id) {
-        alert(`Editar empleado con ID: ${id}`);
-        // En un entorno real, redirigirías a una página de edición
-    }
-</script>
 </body>
 </html>
