@@ -3,9 +3,11 @@ package org.example.lab3copia.controller;
 import org.example.lab3copia.model.Department;
 import org.example.lab3copia.model.Employee;
 import org.example.lab3copia.model.Job;
+import org.example.lab3copia.model.Report;
 import org.example.lab3copia.service.DepartmentService;
 import org.example.lab3copia.service.EmployeeService;
 import org.example.lab3copia.service.JobService;
+import org.example.lab3copia.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,9 @@ public class EmployeeController {
 
     @Autowired
     private JobService jobService;
+
+    @Autowired
+    private ReportService reportService;
 
     @GetMapping("/employeeList")
     public String getEmployeeList(Model model) {
@@ -94,5 +99,23 @@ public class EmployeeController {
             employeeService.updateEmployee(existingEmployee);
         }
         return "redirect:/employeeList";
+    }
+
+    // MEtodo para obtener la lista de reportes
+    @GetMapping("/reportList")
+    public String getReportList(Model model) {
+        List<Report> reports = reportService.generateReports(null);
+        model.addAttribute("reports", reports);
+        return "reportList";
+    }
+
+    // para buscar en la lista de reportes
+    @PostMapping("/reportList/search")
+    public String searchReports(
+            @RequestParam(value = "name", required = false) String name,
+            Model model) {
+        List<Report> reports = reportService.generateReports(name);
+        model.addAttribute("reports", reports);
+        return "reportList";
     }
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Empleados</title>
+    <style>
+        .search-container {
+            margin: 20px 0;
+            max-width: 600px;
+        }
+        .search-container input {
+            padding: 8px;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .search-btn, .clear-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+        }
+        .clear-btn {
+            background-color: #f44336;
+        }
+        .search-btn:hover, .clear-btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{navbar.html :: navbar}"></div>
+
+<div class="search-container">
+    <form th:action="@{/reportList/search}" method="post">
+        <label for="searchName">Nombre:</label>
+        <input type="text" id="searchName" name="name" placeholder="Buscar por nombre">
+        <button type="submit" class="search-btn">Buscar</button>
+        <button type="button" class="clear-btn" onclick="window.location.href='/reportList'">Limpiar</button>
+    </form>
+</div>
+
+<h2>Reporte de Empleados</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Salario Más Alto</th>
+        <th>Salario Más Bajo</th>
+        <th>Salario Promedio por Puesto</th>
+        <th>Nombre con Salario Más Alto</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="report : ${reports}">
+        <td th:text="${#numbers.formatDecimal(report.salarioMax, 2, 2)}"></td>
+        <td th:text="${#numbers.formatDecimal(report.salarioMin, 2, 2)}"></td>
+        <td th:text="${#numbers.formatDecimal(report.salarioPromPorTrabajo, 2, 2)}"></td>
+        <td th:text="${report.nombreMasPagado}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
